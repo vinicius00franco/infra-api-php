@@ -20,7 +20,8 @@ RUN chmod +x /usr/bin/wait-for-it
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Copiar o arquivo .env para dentro do reconhecimentoFacialApi
-COPY .env.prod /var/www/html/.env
+COPY ../reconhecimentoFacialApi/.env.prod /var/www/html/.env
+
 
 # Copiar o arquivo de configuração do PHP-FPM para o container
 COPY infra/php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf

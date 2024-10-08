@@ -10,10 +10,10 @@ services:
       - ../reconhecimentoFacialApi:/var/www/html
     environment:
       APP_ENV: prod
-      DATABASE_URL_MYSQL: mysql://root:root@mysql:3310/symfonydb
-      DATABASE_URL_POSTGRES: pgsql://symfony_postgres:secret@postgres:5440/symfonydb
-    env_file:
-      - ../.env.prod
+      DATABASE_URL: mysql://root:root@mysql:3306/symfonydb  # Alterado para usar porta interna do MySQL
+      DATABASE_URL_POSTGRES: pgsql://symfony_postgres:secret@postgres:5432/symfonydb  # Alterado para usar porta interna do PostgreSQL
+      CORS_ALLOW_ORIGIN: "*"
+
     expose:
       - 9000
 
@@ -21,8 +21,9 @@ services:
       - mysql
       - postgres
 
-    command: [ "wait-for-it", "mysql:3306", "-t", "6", "--", "wait-for-it", "postgres:5432", "-t", "6", "--", "php-fpm" ]
+    command: [ "wait-for-it", "mysql:3306", "-t", "30", "--", "wait-for-it", "postgres:5432", "-t", "30", "--", "php-fpm" ]
 
+    
   nginx:
     image: nginx:latest
     container_name: nginx-api
@@ -43,7 +44,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: symfonydb
-
     networks:
       - api_network
     volumes:
@@ -58,13 +58,12 @@ services:
       POSTGRES_USER: symfony_postgres
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: symfonydb
-
     networks:
       - api_network
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5440:5432" # Porta padrão para PostgreSQL
+      - "5442:5432" # Porta padrão para PostgreSQL
 
   redis:
     image: redis:6.2
