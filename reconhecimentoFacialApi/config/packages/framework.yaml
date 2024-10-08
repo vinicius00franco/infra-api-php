@@ -1,0 +1,24 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+  secret: "%env(APP_SECRET)%"
+  # CSRF Protection (desabilitado por enquanto)
+  # csrf_protection: true
+
+  # Configuração da sessão
+  session: true
+
+  # Configuração de cache
+  cache:
+    pools:
+      doctrine.system_cache_pool:
+        adapter: cache.adapter.redis
+        default_lifetime: 3600
+      doctrine.result_cache_pool:
+        adapter: cache.adapter.redis
+        default_lifetime: 3600
+
+when@test:
+  framework:
+    test: true
+    session:
+      storage_factory_id: session.storage.factory.mock_file

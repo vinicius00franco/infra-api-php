@@ -1,0 +1,32 @@
+doctrine:
+  dbal:
+    default_connection: mysql
+    connections:
+      mysql:
+        url: "%env(resolve:DATABASE_URL_MYSQL)%"
+      postgres:
+        url: "%env(resolve:DATABASE_URL_POSTGRES)%"
+
+  orm:
+    default_entity_manager: mysql
+    entity_managers:
+      mysql:
+        connection: mysql
+        mappings:
+          App:
+            is_bundle: false
+            type: attribute
+            dir: "%kernel.project_dir%/src/Entity/Mysql"
+            prefix: 'App\Entity\Mysql'
+            alias: Mysql
+      postgres:
+        connection: postgres
+        mappings:
+          App:
+            is_bundle: false
+            type: attribute
+            dir: "%kernel.project_dir%/src/Entity/Postgres"
+            prefix: 'App\Entity\Postgres'
+            alias: Postgres
+
+  

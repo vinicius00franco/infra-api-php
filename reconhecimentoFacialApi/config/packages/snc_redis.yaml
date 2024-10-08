@@ -1,0 +1,7 @@
+snc_redis:
+  clients:
+    default:
+      type: phpredis
+      alias: default
+      dsn: "redis://redis:6379"
+      logging: false # Desabilite o log em produção para evitar overhead

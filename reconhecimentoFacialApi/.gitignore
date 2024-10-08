@@ -1,0 +1,17 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+/reconhecimentoFacialApi/var/
+/reconhecimentoFacialApi/.env.local
+/reconhecimentoFacialApi/.env
+
+/reconhecimentoFacialApi/.env.prod
+
+/.env.prod
+###< symfony/framework-bundle ###
