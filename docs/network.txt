@@ -1,0 +1,17 @@
+ Rede de containers e DNS
+Os containers estão se comunicando entre si utilizando a configuração padrão de rede do Docker, que já cria uma rede interna quando você define múltiplos serviços no docker-compose.yml. Cada container pode acessar o outro através do nome do serviço especificado no docker-compose.yml via DNS. Por exemplo:
+
+O container api se comunica com o MySQL pelo hostname mysql na porta 3306.
+O container api se comunica com o PostgreSQL pelo hostname postgres na porta 5432.
+A linha depends_on que você usa é apropriada para garantir que os bancos de dados estejam disponíveis antes do container api iniciar:
+
+yaml
+Copiar código
+depends_on:
+  - mysql
+  - postgres
+Além disso, o uso de wait-for-it.sh no seu Dockerfile garante que a inicialização dos serviços MySQL e PostgreSQL seja verificada antes de o serviço php-fpm iniciar, evitando erros de conexão prematuros:
+
+yaml
+Copiar código
+command: [ "wait-for-it", "mysql:3306", "--", "wait-for-it", "postgres:5432", "--", "php-fpm" ]
